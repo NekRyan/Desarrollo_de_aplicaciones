@@ -11,10 +11,10 @@ algoritmos = AlgoritmosSecuenciales(numero)
 
 #Crear botones para ejecutar los algoritmos secunciales
 if st.button("calcular suma de N numeros"):
-    st.success(f"la suma de los primeros {numero} numero es:{algoritmos.suma_n_numeros()}")
+    st.success(f"la suma de los primeros {numero} numero es: {algoritmos.suma_n_numeros()}")
 
 if st.button("calcular factorial"):
     st.success(f"el factorial de {numero} es: {algoritmos.factorial()}")
 
 if st.button("generar secuencia de fibonacci"):
-    st.success(f"la secuencia de fibonacci con {numero} terminos es {algoritmos.fibonacci()}")
+    st.success(f"la secuencia de fibonacci con {numero} terminos es: {algoritmos.fibonacci()}")
