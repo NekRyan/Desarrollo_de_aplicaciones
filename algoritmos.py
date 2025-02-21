@@ -8,7 +8,7 @@ class AlgoritmosSecuenciales:
     
     def factorial(self):
         resultado = 1
-        for i in range(1, self.numero +1)
+        for i in range(1, self.numero +1):
             resultado *= i
         return resultado
     
