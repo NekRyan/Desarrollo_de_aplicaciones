@@ -28,7 +28,7 @@ if opcion == "Inicio":
 #Sección: Clasificacion de Puntajes
 elif opcion == "Clasificacion de Puntajes":
     st.title("Clasificacion de Puntajes") 
-    st.write("Ingrese un puntaje y el sistema lo clasificará") 
+    st.write("Ingrese un puntaje y el sistema lo clasificara.") 
 
     #Entrada de usuario
     puntaje = st.number_input("Ingrese un puntaje (0-100):", min_value=0, max_value=100, step=1)
