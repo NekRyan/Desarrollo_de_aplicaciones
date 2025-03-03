@@ -26,12 +26,6 @@ class Empleado:
         else:
             raise ValueError("Estado no válido. Usa: TC, D, R o Activo.")
 
-# Creación de empleados
-gerente = Empleado("Carlos López", "Gerente")
-jefe_marketing = Empleado("María Pérez", "Jefe de Marketing", gerente)
-asistente_marketing = Empleado("Ana Gómez", "Asistente", jefe_marketing)
-tecnico1 = Empleado("Luis Torres", "Técnico", jefe_marketing, "D")  # Despedido
-
 # Clase para Gerente
 class Gerente(Empleado):
     def __init__(self, nombre):
@@ -72,12 +66,10 @@ class Tecnico(Empleado):
         return self.jefe.nombre
 
 # Creación de empleados
-gerente = Gerente("Carlos Pérez")
-jefes = [JefeArea(f"Jefe {i+1}", gerente) for i in range(5)]
-asistentes = [Asistente(f"Asistente {i+1}", jefes[i//2]) for i in range(10)]
-tecnicos = [Tecnico(f"Técnico {i+1}", jefes[i//5], i+1) for i in range(20)]
-
-empleados = [gerente] + jefes + asistentes + tecnicos
+gerente = Empleado("Carlos López", "Gerente")
+jefe_marketing = Empleado("María Pérez", "Jefe de Marketing", gerente)
+asistente_marketing = Empleado("Ana Gómez", "Asistente", jefe_marketing)
+tecnico1 = Empleado("Luis Torres", "Técnico", jefe_marketing, "D")  # Despedido
 
 # Mostrar en Streamlit
 st.title("Sistema de Gestión de Recursos Humanos")
