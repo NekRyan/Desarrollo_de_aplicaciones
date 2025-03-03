@@ -5,17 +5,17 @@ class Empleado:
         self.nombre = nombre
         self.cargo = cargo
         self.jefe = jefe
-        self.estado = estado  # Estado por defecto: Activo
+        self.estado = estado  
 
-    def get_resumen(self):
+    def resumen(self):
         """Retorna el nombre del trabajador junto con su cargo."""
         return f"{self.nombre} - {self.cargo}"
 
-    def get_jefe_inmediato(self):
+    def jefe_inmediato(self):
         """Retorna el jefe inmediato del trabajador o 'No tiene jefe' si es gerente."""
         return self.jefe.nombre if self.jefe else "No tiene jefe"
 
-    def get_estado(self):
+    def estado(self):
         """Retorna el estado del empleado (Activo, TC, D, R)."""
         return f"Estado: {self.estado}" if self.estado in ["TC", "D", "R"] else "Activo"
 
@@ -29,9 +29,9 @@ class Empleado:
 class Tecnico(Empleado):
     def __init__(self, nombre, jefe, experiencia, estado="Activo"):
         super().__init__(nombre, "Técnico", jefe, estado)
-        self.experiencia = experiencia  # Años de experiencia
+        self.experiencia = experiencia 
 
-    def get_resumen(self):
+    def resumen(self):
         """Retorna el nombre, cargo y años de experiencia del técnico."""
         return f"{self.nombre} - {self.cargo} ({self.experiencia} años de experiencia)"
 
@@ -73,9 +73,9 @@ jefe_logistica = JefeArea("Miguel Rojas", "Logística", gerente)
 asistente1 = Asistente("Ana Gómez", jefe_marketing)
 asistente2 = Asistente("Pedro Núñez", jefe_sistemas)
 
-tecnico1 = Tecnico("Luis Torres", jefe_marketing, 5, "D")  # Despedido
+tecnico1 = Tecnico("Luis Torres", jefe_marketing, 5, "D") 
 tecnico2 = Tecnico("Sofía Herrera", jefe_sistemas, 3)
-tecnico3 = Tecnico("Andrés Ramírez", jefe_produccion, 4, "TD") # TD
+tecnico3 = Tecnico("Andrés Ramírez", jefe_produccion, 4, "D") 
 tecnico4 = Tecnico("Daniela Pérez", jefe_logistica, 2)
 tecnico5 = Tecnico("Mario López", jefe_marketing, 6)
 
@@ -89,7 +89,7 @@ jefe_sistemas.agregar_tecnico(tecnico2)
 jefe_produccion.agregar_tecnico(tecnico3)
 jefe_logistica.agregar_tecnico(tecnico4)
 
-# Mostrar en Streamlit
+# For Streamlit
 st.title("📊 Sistema de Gestión de Recursos Humanos")
 
 empleados = [gerente, jefe_marketing, jefe_sistemas, jefe_produccion, jefe_logistica,
