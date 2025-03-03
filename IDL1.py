@@ -2,82 +2,84 @@ import streamlit as st
 
 class Empleado:
     def __init__(self, nombre, cargo, jefe=None, estado="Activo"):
-        self._nombre = nombre
-        self._cargo = cargo
-        self._jefe = jefe
-        self._estado = estado
+        self.nombre = nombre
+        self.cargo = cargo
+        self.jefe = jefe
+        self.estado = estado  # Estado por defecto: Activo
 
-    # Métodos Getter y Setter
-    def get_nombre(self):
-        return self._nombre
+    def get_resumen(self):
+        """Retorna el nombre del trabajador junto con su cargo."""
+        return f"{self.nombre} - {self.cargo}"
 
-    def get_cargo(self):
-        return self._cargo
-
-    def get_jefe(self):
-        return self._jefe.get_nombre() if self._jefe else "No tiene jefe"
+    def get_jefe_inmediato(self):
+        """Retorna el jefe inmediato del trabajador o 'No tiene jefe' si es gerente."""
+        return self.jefe.nombre if self.jefe else "No tiene jefe"
 
     def get_estado(self):
-        return self._estado
+        """Retorna el estado del empleado (Activo, TC, D, R)."""
+        return f"Estado: {self.estado}" if self.estado in ["TC", "D", "R"] else "Activo"
 
-    def resumen(self):
-        return f"{self._nombre} - {self._cargo}"
-
-    def jefe_inmediato(self):
-        return self.get_jefe()
-
-    def estado(self):
-        estados = {"TC": "🟠 Término de Contrato", "D": "🔴 Despedido", "R": "🟡 Renuncia", "Activo": "🟢 Activo"}
-        return estados.get(self._estado, "🟢 Activo")
-
+    # Métodos Getter y Setter
+    def set_estado(self, nuevo_estado):
+        if nuevo_estado in ["TC", "D", "R", "Activo"]:
+            self.estado = nuevo_estado
+        else:
+            raise ValueError("Estado no válido. Usa: TC, D, R o Activo.")
 
 class Tecnico(Empleado):
     def __init__(self, nombre, jefe, experiencia, estado="Activo"):
         super().__init__(nombre, "Técnico", jefe, estado)
-        self._experiencia = experiencia
+        self.experiencia = experiencia  # Años de experiencia
 
-    def resumen(self):
-        return f"{self._nombre} - {self._cargo} ({self._experiencia} años de experiencia)"
-
+    def get_resumen(self):
+        """Retorna el nombre, cargo y años de experiencia del técnico."""
+        return f"{self.nombre} - {self.cargo} ({self.experiencia} años de experiencia)"
 
 class JefeArea(Empleado):
     def __init__(self, nombre, area, gerente, estado="Activo"):
         super().__init__(nombre, f"Jefe de {area}", gerente, estado)
-        self._area = area
-        self._asistentes = []
-        self._tecnicos = []
+        self.area = area
+        self.asistentes = []
+        self.tecnicos = []
 
     def agregar_asistente(self, asistente):
-        if len(self._asistentes) < 2:
-            self._asistentes.append(asistente)
+        """Agrega asistentes al jefe de área (máximo 2)."""
+        if len(self.asistentes) < 2:
+            self.asistentes.append(asistente)
+        else:
+            raise ValueError(f"El área {self.area} ya tiene el máximo de 2 asistentes.")
 
     def agregar_tecnico(self, tecnico):
-        if len(self._tecnicos) < 5:
-            self._tecnicos.append(tecnico)
-
+        """Agrega técnicos al jefe de área (máximo 5)."""
+        if len(self.tecnicos) < 5:
+            self.tecnicos.append(tecnico)
+        else:
+            raise ValueError(f"El área {self.area} ya tiene el máximo de 5 técnicos.")
 
 class Asistente(Empleado):
     def __init__(self, nombre, jefe, estado="Activo"):
         super().__init__(nombre, "Asistente", jefe, estado)
 
-
-# 📌 CREACIÓN DE EMPLEADOS
+# Creación de empleados según la jerarquía
 gerente = Empleado("Carlos López", "Gerente")
 
+# Creación de jefes de área
 jefe_marketing = JefeArea("María Pérez", "Marketing", gerente)
 jefe_sistemas = JefeArea("Juan Torres", "Sistemas", gerente)
 jefe_produccion = JefeArea("Laura Gómez", "Producción", gerente)
 jefe_logistica = JefeArea("Miguel Rojas", "Logística", gerente)
 
+# Creación de asistentes y técnicos
 asistente1 = Asistente("Ana Gómez", jefe_marketing)
 asistente2 = Asistente("Pedro Núñez", jefe_sistemas)
 
-tecnico1 = Tecnico("Luis Torres", jefe_marketing, 5, "D")
+tecnico1 = Tecnico("Luis Torres", jefe_marketing, 5, "D")  # Despedido
 tecnico2 = Tecnico("Sofía Herrera", jefe_sistemas, 3)
-tecnico3 = Tecnico("Andrés Ramírez", jefe_produccion, 4)
+tecnico3 = Tecnico("Andrés Ramírez", jefe_produccion, 4, "D") # Despedido
 tecnico4 = Tecnico("Daniela Pérez", jefe_logistica, 2)
 tecnico5 = Tecnico("Mario López", jefe_marketing, 6)
 
+# Asignación de subordinados
 jefe_marketing.agregar_asistente(asistente1)
 jefe_sistemas.agregar_asistente(asistente2)
 
@@ -87,28 +89,14 @@ jefe_sistemas.agregar_tecnico(tecnico2)
 jefe_produccion.agregar_tecnico(tecnico3)
 jefe_logistica.agregar_tecnico(tecnico4)
 
-# 📌 LISTA DE EMPLEADOS
+# Mostrar en Streamlit
+st.title("📊 Sistema de Gestión de Recursos Humanos")
+
 empleados = [gerente, jefe_marketing, jefe_sistemas, jefe_produccion, jefe_logistica,
              asistente1, asistente2, tecnico1, tecnico2, tecnico3, tecnico4, tecnico5]
 
-# 📌 INTERFAZ MEJORADA EN STREAMLIT
-st.set_page_config(page_title="Gestión de Recursos Humanos", page_icon="📊")
-
-st.title("📊 Gestión de Recursos Humanos")
-st.write("Sistema de visualización interactivo para la jerarquía de empleados.")
-
-# 📌 FILTROS INTERACTIVOS
-tipo_empleado = st.selectbox("🔍 Filtrar por tipo de empleado:", ["Todos", "Gerente", "Jefe de Área", "Asistente", "Técnico"])
-buscar_nombre = st.text_input("🔎 Buscar por nombre:")
-
-# 📌 MOSTRAR EMPLEADOS SEGÚN FILTRO
 for emp in empleados:
-    if tipo_empleado != "Todos" and tipo_empleado not in emp.get_cargo():
-        continue
-    if buscar_nombre and buscar_nombre.lower() not in emp.get_nombre().lower():
-        continue
-
-    with st.expander(f"👤 {emp.resumen()}"):
-        st.write(f"**👨‍💼 Jefe inmediato:** {emp.jefe_inmediato()}")
-        st.write(f"**📌 Estado:** {emp.estado()}")
-
+    st.write(f"👤 {emp.get_resumen()}")
+    st.write(f"👨‍💼 Jefe inmediato: {emp.get_jefe_inmediato()}")
+    st.write(f"📌 {emp.get_estado()}")
+    st.write("---")
