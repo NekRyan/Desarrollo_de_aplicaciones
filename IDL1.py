@@ -32,17 +32,6 @@ jefe_marketing = Empleado("María Pérez", "Jefe de Marketing", gerente)
 asistente_marketing = Empleado("Ana Gómez", "Asistente", jefe_marketing)
 tecnico1 = Empleado("Luis Torres", "Técnico", jefe_marketing, "D")  # Despedido
 
-# Mostrar en Streamlit
-st.title("Sistema de Gestión de Recursos Humanos")
-
-empleados = [gerente, jefe_marketing, asistente_marketing, tecnico1]
-
-for emp in empleados:
-    st.write(f"👤 {emp.get_resumen()}")
-    st.write(f"👨‍💼 Jefe inmediato: {emp.get_jefe_inmediato()}")
-    st.write(f"📌 {emp.get_estado()}")
-    st.write("---")
-
 # Clase para Gerente
 class Gerente(Empleado):
     def __init__(self, nombre):
@@ -90,10 +79,13 @@ tecnicos = [Tecnico(f"Técnico {i+1}", jefes[i//5], i+1) for i in range(20)]
 
 empleados = [gerente] + jefes + asistentes + tecnicos
 
-# Interfaz con Streamlit
-st.title("Sistema de Gestión de Empleados")
+# Mostrar en Streamlit
+st.title("Sistema de Gestión de Recursos Humanos")
+
+empleados = [gerente, jefe_marketing, asistente_marketing, tecnico1]
+
 for emp in empleados:
-    st.write(emp.def_resumen())
-    st.write(f"Jefe inmediato: {emp.def_jefe_inmediato()}")
-    st.write(f"Estado: {emp.def_estado()}")
+    st.write(f"👤 {emp.get_resumen()}")
+    st.write(f"👨‍💼 Jefe inmediato: {emp.get_jefe_inmediato()}")
+    st.write(f"📌 {emp.get_estado()}")
     st.write("---")
