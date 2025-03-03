@@ -1,19 +1,47 @@
 import streamlit as st
 
-import streamlit as st
-
 # Clase base para todos los empleados
 class Empleado:
-    def __init__(self, nombre, puesto, estado="Activo"):
+    def __init__(self, nombre, cargo, jefe=None, estado="Activo"):
         self.nombre = nombre
-        self.puesto = puesto
-        self.estado = estado
-    
-    def def_resumen(self):
-        return f"{self.nombre} - {self.puesto}"
-    
-    def def_estado(self):
-        return self.estado
+        self.cargo = cargo
+        self.jefe = jefe
+        self.estado = estado  # Activo por defecto
+
+    def get_resumen(self):
+        return f"{self.nombre} - {self.cargo}"
+
+    def get_jefe_inmediato(self):
+        return self.jefe.nombre if self.jefe else "No tiene jefe"
+
+    def get_estado(self):
+        if self.estado in ["TC", "D", "R"]:
+            return f"Estado: {self.estado}"
+        return "Activo"
+
+    # Métodos Getter y Setter para estado
+    def set_estado(self, nuevo_estado):
+        if nuevo_estado in ["TC", "D", "R", "Activo"]:
+            self.estado = nuevo_estado
+        else:
+            raise ValueError("Estado no válido. Usa: TC, D, R o Activo.")
+
+# Creación de empleados
+gerente = Empleado("Carlos López", "Gerente")
+jefe_marketing = Empleado("María Pérez", "Jefe de Marketing", gerente)
+asistente_marketing = Empleado("Ana Gómez", "Asistente", jefe_marketing)
+tecnico1 = Empleado("Luis Torres", "Técnico", jefe_marketing, "D")  # Despedido
+
+# Mostrar en Streamlit
+st.title("Sistema de Gestión de Recursos Humanos")
+
+empleados = [gerente, jefe_marketing, asistente_marketing, tecnico1]
+
+for emp in empleados:
+    st.write(f"👤 {emp.get_resumen()}")
+    st.write(f"👨‍💼 Jefe inmediato: {emp.get_jefe_inmediato()}")
+    st.write(f"📌 {emp.get_estado()}")
+    st.write("---")
 
 # Clase para Gerente
 class Gerente(Empleado):
