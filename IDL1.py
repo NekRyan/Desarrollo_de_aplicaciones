@@ -75,7 +75,7 @@ asistente2 = Asistente("Pedro Núñez", jefe_sistemas)
 
 tecnico1 = Tecnico("Luis Torres", jefe_marketing, 5, "D")  # Despedido
 tecnico2 = Tecnico("Sofía Herrera", jefe_sistemas, 3)
-tecnico3 = Tecnico("Andrés Ramírez", jefe_produccion, 4)
+tecnico3 = Tecnico("Andrés Ramírez", jefe_produccion, 4, "TD") # TD
 tecnico4 = Tecnico("Daniela Pérez", jefe_logistica, 2)
 tecnico5 = Tecnico("Mario López", jefe_marketing, 6)
 
