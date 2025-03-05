@@ -9,3 +9,10 @@ st.subheader("Bucle FOR")
 
 for i in range(1, limite + 1):
     st.write(f"Iteraci[on {i} con for")
+
+st.subheader ("Bucle While")
+contador = 1
+
+while contador <= limite:
+    st.write(f"Iteracion {contador} con while")
+    contador += 1
