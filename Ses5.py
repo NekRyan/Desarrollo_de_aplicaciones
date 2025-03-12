@@ -6,7 +6,7 @@ import os
 
 SUPABASE_URL = "https://bmuksajpluhszplulsvv.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJtdWtzYWpwbHVoc3pwbHVsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE3NDU1MDIsImV4cCI6MjA1NzMyMTUwMn0.FxisTKSWk17XsI3E9oypN9MFRfVHSDuERcXz2zDcECg"
-supabase: Client = create_client(supabase_url, supabase_key)
+supabase: client = create_client(SUPABASE_KEY, SUPABASE_URL)
 
 st.title("Gestion de clientes - CRUD con Supabase y Streamlit")
 
