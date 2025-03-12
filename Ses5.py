@@ -13,9 +13,9 @@ st.title("Gestion de clientes - CRUD con Supabase y Streamlit")
 #Formulario para agregar cliente
 
 st.header("Agregar cliente")
-nombre = st.text_input ("Nombre")
-email = st.text_input ("Email")
-telefono = st.text_input ("Telefono")
+nombre = st.text_input("Nombre")
+email = st.text_input("Email")
+telefono = st.text_input("Telefono")
 
 if st.button("Agregar cliente"):
     if nombre and email:
