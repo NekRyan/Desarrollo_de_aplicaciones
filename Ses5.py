@@ -22,7 +22,7 @@ if st.button("Agregar cliente"):
         data = {"nombre": nombre, "email": email, "telefono": telefono}
         response = supabase.table("Clientes").insert(data).execute()
         st.success("Cliente satisfecho correctamente")
-    
+        st.rerun
     else:
         st.warning("Nombre y email son obligatorios")
 
