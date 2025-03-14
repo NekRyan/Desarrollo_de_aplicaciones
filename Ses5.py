@@ -2,6 +2,7 @@ import streamlit as st
 import os
 from supabase import create_client, Client
 
+
 #configurar supabase
 
 SUPABASE_URL = "https://bmuksajpluhszplulsvv.supabase.co"
@@ -33,7 +34,7 @@ clientes = supabase.table("clientes").select("*").execute()
 if clientes.data:
     for cliente in clientes.data:
         st.subheader(cliente["nombre"])
-        st.write(f"{cliente['email']}")
+        st.write(f"👨‍💼{cliente['email']}")
         st.write(f"{cliente['telefono']}")
         st.write(f"Fecha de registro: {cliente['fecha_registro']}")
     
