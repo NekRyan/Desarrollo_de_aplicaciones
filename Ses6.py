@@ -29,10 +29,14 @@ if st.button("Agregar Cliente"):
             }
             response = supabase.table("clientes").insert(data).execute()
 
-            if not response.error:
+            # Acceder correctamente a la respuesta de Supabase
+            if response.data:
                 st.success("Cliente agregado correctamente")
+            elif response.error:
+                st.error(f"Error al registrar el cliente: {response.error.message}")
             else:
-                st.error(f"Error al registrar el cliente: {response.error}")
+                st.error("Error desconocido al registrar el cliente")
+
         except Exception as e:
             st.error(f"Error en la base de datos: {e}")
     else:
