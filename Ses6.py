@@ -49,7 +49,7 @@ if st.button("Agregar Cliente"):
                 "telefono": telefono,
                 "ciudad": ciudad,
                 "direccion": direccion,
-                "foto_url": foto_url,
+                "foto": foto_url,
             }
             response = supabase.table("clientes").insert(data).execute()
 
