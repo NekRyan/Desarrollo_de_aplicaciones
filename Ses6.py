@@ -17,11 +17,29 @@ st.header("Agregar Cliente")
 nombre = st.text_input("Nombre")
 email = st.text_input("Email")
 telefono = st.text_input("Telefono")
+ciudad = st.text_input("Ciudad")
+direccion = st.text_input("Dirección")
+foto = st.file_uploader("Subir foto", type=["jpg", "png", "jpeg"])
 
 if st.button("Agregar Cliente"):
     if nombre and email:
-        data = {"nombre": nombre, "email": email, "telefono": telefono}
+        foto_url = None
+        if foto:
+            foto_bytes = foto.read()
+            file_path = f"clientes/{nombre}_{email}.jpg"
+            supabase.storage.from_("fotos_clientes").upload(file_path, BytesIO(foto_bytes), {"content-type": "image/jpeg"})
+            foto_url = f"{SUPABASE_URL}/storage/v1/object/public/fotos_clientes/{file_path}"
+
+        data = {
+            "nombre": nombre,
+            "email": email,
+            "telefono": telefono,
+            "ciudad": ciudad,
+            "direccion": direccion,
+            "foto_url": foto_url
+        }
         response = supabase.table("clientes").insert(data).execute()
-        st.success("Clientes agregados correctamente")
-    else: 
+        st.success("Cliente agregado correctamente")
+    else:
         st.warning("Nombre y Email son obligatorios")
+   
