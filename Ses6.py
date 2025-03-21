@@ -28,16 +28,16 @@ if st.button("Agregar Cliente"):
                 foto_bytes = foto.read()
                 file_path = f"clientes/{nombre}_{email}.jpg"
 
-                # Subir imagen a Supabase Storage con upsert=True para sobreescribir si ya existe
-                response = supabase.storage.from_("fotos.client").upload(
-                    file_path, BytesIO(foto_bytes), {"content-type": "image/jpeg"}, upsert=True
+                # Subir imagen a Supabase Storage
+                response = supabase.storage.from_("fotosclientes").upload(
+                    file_path, BytesIO(foto_bytes), {"content-type": "image/jpeg"}
                 )
 
                 # Verificar si la imagen se subió correctamente
-                if response.get("error") is None:
-                    foto_url = f"{SUPABASE_URL}/storage/buckets/fotos.client{file_path}"
+                if not response.error:
+                    foto_url = f"{SUPABASE_URL}/storage/v1/object/public/fotosclientes/{file_path}"
                 else:
-                    st.error("Error al subir la imagen")
+                    st.error(f"Error al subir la imagen: {response.error}")
             except Exception as e:
                 st.error(f"Error al subir la imagen: {e}")
 
@@ -49,16 +49,15 @@ if st.button("Agregar Cliente"):
                 "telefono": telefono,
                 "ciudad": ciudad,
                 "direccion": direccion,
-                "foto": foto_url,
+                "foto_url": foto_url,  # Corrección del nombre de la clave
             }
             response = supabase.table("clientes").insert(data).execute()
 
-            if response.get("error") is None:
+            if not response.error:
                 st.success("Cliente agregado correctamente")
             else:
-                st.error("Error al registrar el cliente")
+                st.error(f"Error al registrar el cliente: {response.error}")
         except Exception as e:
             st.error(f"Error en la base de datos: {e}")
     else:
         st.warning("Nombre y Email son obligatorios")
-   
