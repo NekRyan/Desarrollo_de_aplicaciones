@@ -29,13 +29,13 @@ if st.button("Agregar Cliente"):
                 file_path = f"clientes/{nombre}_{email}.jpg"
 
                 # Subir imagen a Supabase Storage con upsert=True para sobreescribir si ya existe
-                response = supabase.storage.from_("fotos_clientes").upload(
+                response = supabase.storage.from_("fotos.client").upload(
                     file_path, BytesIO(foto_bytes), {"content-type": "image/jpeg"}, upsert=True
                 )
 
                 # Verificar si la imagen se subió correctamente
                 if response.get("error") is None:
-                    foto_url = f"{SUPABASE_URL}/storage/v1/object/public/fotos_clientes/{file_path}"
+                    foto_url = f"{SUPABASE_URL}/storage/v1/object/public/fotos.clientes/{file_path}"
                 else:
                     st.error("Error al subir la imagen")
             except Exception as e:
