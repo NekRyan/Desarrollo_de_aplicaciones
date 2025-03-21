@@ -9,7 +9,7 @@ SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-st.title("Gesti[on de Clientes CRUD Supabase y Streamlit]")
+st.title("Registro de Clientes")
 
 #Formulario agregar cliente
 
