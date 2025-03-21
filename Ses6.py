@@ -21,7 +21,7 @@ telefono = st.text_input("Telefono")
 if st.button("Agregar Cliente"):
     if nombre and email:
         data = {"nombre": nombre, "email": email, "telefono": telefono}
-        response = supabase.table("Clientes").insert(data).execute()
+        response = supabase.table("clientes").insert(data).execute()
         st.success("Clientes agregados correctamente")
     else: 
         st.warning("Nombre y Email son obligatorios")
